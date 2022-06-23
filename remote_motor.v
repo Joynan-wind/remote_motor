@@ -23,9 +23,10 @@ P.S.1.数码管和点阵信号是为了使其熄灭，降低功率消耗；
 	 套的遥控器有三个按键的键值是我们实验用的遥控器按键键值是一样的，并且
 	 因为没有连发码设置没有按键失效的情况。
 ***********************************************/
-module remote_motor(CLK,RST,Din,DriveOut,dataout,row,col);
+module remote_motor(CLK,RST,Din,DriveOut,dataout,row,col,en);
 	input CLK,RST,Din;
 	output[1:0] DriveOut;
+	output[3:0] en;
 	output[7:0] dataout,row,col;
 	wire CLK10kHz,CLK100kHz;
 	wire[31:0] DataNet;
@@ -38,10 +39,12 @@ module remote_motor(CLK,RST,Din,DriveOut,dataout,row,col);
 	IRDA U1(.CLK10kHz(CLK10kHz),.Din(Din),.Dout(DataNet),.RST(RST));
 	MotorCrl U2(.DataIn(DataNet),.SW(SW),.RateSet(RateSet),.CLK(CLK10kHz));
 	PWM U3(.Rst(RST),.Clk(CLK100kHz),.RateSet(RateSet),.PWMOut(PWMOut));
+	nixie_tube U4(.rate_set(RateSet),.dataout(dateout));
 	
 	assign DriveOut[0]=SW?PWMOut:1'b0;
 	assign DriveOut[1]=1'b0;
-	assign dataout=8'b11111111;
+	assign en=4'b0001;
+	//assign dataout=8'b11111111;
 	assign row=8'b11111111;
 	assign col=8'b11111111;
 endmodule
