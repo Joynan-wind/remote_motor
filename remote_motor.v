@@ -43,7 +43,7 @@ module remote_motor(CLK,RST,Din,DriveOut,dataout,row,col,en);
 	
 	assign DriveOut[0]=SW?PWMOut:1'b0;
 	assign DriveOut[1]=1'b0;
-	assign en=4'b0001;
+	assign en=4'b0111;
 	//assign dataout=8'b11111111;
 	assign row=8'b11111111;
 	assign col=8'b11111111;

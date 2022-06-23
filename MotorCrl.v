@@ -16,12 +16,12 @@ module MotorCrl(DataIn,SW,RateSet,CLK);
 	begin
 		case (DataIn[23:16])										  //高低位反转后NEC码的16到23位为其控制码
 			8'h45:begin SW<=1'b1;end                       //控制码a2，开
-			8'h15:begin                                    //控制码a8，电机加速
-						if(RateSet==7'd90)RateSet<=7'd10;
+			8'h09:begin                                    //控制码a8，电机加速
+						if(RateSet==7'd80)RateSet<=7'd00;
 						else RateSet<=RateSet+7'd10;
 						end
-			8'h09:begin                                    //控制码90，电机减速
-						if(RateSet==7'd10)RateSet<=7'd90;
+			8'h15:begin                                    //控制码90，电机减速
+						if(RateSet==7'd0)RateSet<=7'd90;
 						else RateSet<=RateSet-7'd10;
 						end
 			8'h44:begin SW<=1'b0;end                       //控制码22，关
